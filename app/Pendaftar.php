@@ -22,4 +22,8 @@ class Pendaftar extends Model
     {
         return $this->belongsTo(Penerimaan::class);
     }
+    public function hasil_kuis()
+    {
+        return $this->hasMany(HasilKuis::class);
+    }
 }

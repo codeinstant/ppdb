@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         $pendaftar = null;
         if (Auth::check() && Auth::user()->role_id == 3) {
-            $pendaftar = Pendaftar::where('user_id', Auth::user()->id);
+            $pendaftar = Pendaftar::where('user_id', Auth::user()->id)->get();
         }
         $gelombangAll = Penerimaan::all();
         $gelombang = [];
@@ -26,7 +26,7 @@ class DashboardController extends Controller
             if ($now < $tutup) {
                 $gelombang[$key] = $value;
                 $can_daftar[$key] = true;
-                if ($buka < $now) {
+                if ($buka > $now) {
                     $can_daftar[$key] = false;
                 }
             }

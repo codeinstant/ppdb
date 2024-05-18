@@ -14,8 +14,8 @@ class HasilKuis extends Model
     {
         return $this->belongsTo(Jawaban::class);
     }
-    public function user()
+    public function pendaftar()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Pendaftar::class);
     }
 }

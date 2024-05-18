@@ -9,6 +9,8 @@ use App\Jurusan;
 use App\Profil;
 use App\User;
 use App\Penerimaan;
+use App\Soal;
+use App\HasilKuis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +34,58 @@ class SiswaController extends Controller
         $jurusan = Jurusan::all();
         // echo dd($pendaftar);
         return view('siswa.form', compact('jurusan', 'pendaftar', 'gelombang'));
+    }
+
+    public function testujian($id_gelombang)
+    {
+        $gelombang = Penerimaan::findOrFail($id_gelombang);
+        date_default_timezone_set("Asia/Bangkok");
+        $now = strtotime(date('Y-m-d', time()));
+        $tutup = strtotime($gelombang->tutup);
+
+        $id = Auth::user()->id;
+        $pendaftar = Pendaftar::where('user_id', $id)->where('penerimaan_id', $id_gelombang)->first();
+        $soal = Soal::all();
+        if ($pendaftar->status == 3) {
+            return redirect('/');   
+        }
+        return view('siswa.formkuis', compact('pendaftar', 'gelombang', 'soal'));
+    }
+    public function formtest(Request $request)
+    {
+        $soal = Soal::all();
+        $dataValidate['pendaftar'] = 'required|exists:pendaftar,id';
+        foreach ($soal as $i => $s) {
+            $dataValidate['jawaban'.$i] = 'required|exists:jawaban_kuis,id';
+        }
+        $request->validate($dataValidate);
+        
+        $pendaftar = Pendaftar::findOrFail($request->input('pendaftar'));
+
+        $nilai = 0;
+        $jlh_soal = $soal->count();
+        foreach ($soal as $i => $s) {
+            foreach($s->jawaban as $j => $jw){
+                if ($request->input('jawaban'.$i) == $jw->id && $jw->kunci === "benar") {
+                    $nilai +=1;
+                }
+            }
+            HasilKuis::create([
+                'pendaftar_id' => $request->input('pendaftar'),
+                'jawaban_id' => $request->input('jawaban'.$i)
+            ]);
+        }
+        if ($nilai > $jlh_soal/2) {
+            $pendaftar->update([
+                'status' => 4,
+            ]);
+    
+        }else{
+            $pendaftar->update([
+                'status' => 5,
+            ]);
+        }
+        return back()->with('sukses', 'Data berhasil di kirim slihkan lihat hasil dipengumuman');
     }
 
     public function formulir(Request $request)

@@ -43,8 +43,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pendaftar::class);
     }
-    public function hasil_kuis()
-    {
-        return $this->hasMany(HasilKuis::class);
-    }
 }

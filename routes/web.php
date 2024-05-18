@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
         //route soal
         Route::get('/soal/create', 'Panitia\SoalController@create')->name('soal.create');
         Route::post('/soal', 'Panitia\SoalController@store')->name('soal.store');
-        Route::get('/soal/view', 'Panitia\SoalController@index')->name('soal.index');
+        Route::get('/test/soal/view', 'Panitia\SoalController@index')->name('soal.index');
         Route::get('/soal/{id}', 'Panitia\SoalController@show')->name('soal.show');
         Route::get('/soal/{id}/edit', 'Panitia\SoalController@edit')->name('soal.edit');
         Route::put('/soal/{id}', 'Panitia\SoalController@update')->name('soal.update');
@@ -61,13 +61,15 @@ Route::group(['middleware' => ['auth']], function () {
         //route jawaban
         Route::get('/jawaban/create', 'Panitia\JawabanController@create')->name('jawaban.create');
         Route::post('/jawaban', 'Panitia\JawabanController@store')->name('jawaban.store');
-        Route::get('/jawaban/view', 'Panitia\JawabanController@index')->name('jawaban.index');
+        Route::get('/test/jawaban/view', 'Panitia\JawabanController@index')->name('jawaban.index');
         Route::get('/jawaban/{id}', 'Panitia\JawabanController@show')->name('jawaban.show');
         Route::get('/jawaban/{id}/edit', 'Panitia\JawabanController@edit')->name('jawaban.edit');
         Route::put('/jawaban/{id}', 'Panitia\JawabanController@update')->name('jawaban.update');
         Route::delete('/jawaban/{id}', 'Panitia\JawabanController@destroy')->name('jawaban.delete');
 
-
+        //route hasil
+        Route::get('/test/hasil/view', 'Panitia\HasilController@index')->name('hasil.index');
+        Route::get('/hasil/detail/{id}', 'Panitia\HasilController@detail')->name('hasil.detail');
     });
     Route::group(['middleware' => ['cek_login:1']], function () {
         Route::get('/dashboard', 'Admin\AdminController@index')->name('dashboard');
@@ -125,6 +127,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::group(['middleware' => ['cek_login:3']], function () {
         Route::get('/form/{id_gelombang}', 'Siswa\SiswaController@index')->name('siswa.index');
+        Route::get('/test/{id_gelombang}', 'Siswa\SiswaController@testujian')->name('siswa.test');
+        Route::post('/test', 'Siswa\SiswaController@formtest')->name('siswa.formtest');
         Route::post('/form', 'Siswa\SiswaController@formulir')->name('siswa.formulir');
         Route::get('/detailpendaftar', 'Siswa\SiswaController@detailpendaftar')->name('siswa.detail');
         Route::get('/pengumuman/{id_gelombang}', 'Siswa\SiswaController@pengumuman')->name('siswa.pengumuman');
