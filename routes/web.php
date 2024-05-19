@@ -29,47 +29,16 @@ Route::post('/logout', 'Auth\AuthController@logout')->name('logout');
 Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['cek_login:2']], function () {
-        Route::get('/pdashboard', 'Panitia\PanitiaController@index')->name('pdashboard');
-
-        //route persyaratan 
-        // Route::get('/ppersyaratan/create', 'Panitia\PersyaratanController@create')->name('ppersyaratan.create');
-        // Route::post('/ppersyaratan', 'Panitia\PersyaratanController@store')->name('ppersyaratan.store');
-        // Route::get('/ppersyaratan/view', 'Panitia\PersyaratanController@index')->name('ppersyaratan.index');
-        // Route::get('/ppersyaratan/{id}', 'Panitia\PersyaratanController@show')->name('ppersyaratan.show');
-        // Route::get('/ppersyaratan/{id}/edit', 'Panitia\PersyaratanController@edit')->name('ppersyaratan.edit');
-        // Route::put('/ppersyaratan/{id}', 'Panitia\PersyaratanController@update')->name('ppersyaratan.update');
-        // Route::delete('/ppersyaratan/{id}', 'Panitia\PersyaratanController@destroy')->name('ppersyaratan.delete');
-
-        //route gelombang
-        Route::get('/gelombang/create', 'Panitia\GelombangController@create')->name('gelombang.create');
-        Route::post('/gelombang', 'Panitia\GelombangController@store')->name('gelombang.store');
-        Route::get('/gelombang/view', 'Panitia\GelombangController@index')->name('gelombang.index');
-        Route::get('/gelombang/{id}', 'Panitia\GelombangController@show')->name('gelombang.show');
-        Route::get('/gelombang/{id}/edit', 'Panitia\GelombangController@edit')->name('gelombang.edit');
-        Route::put('/gelombang/{id}', 'Panitia\GelombangController@update')->name('gelombang.update');
-        Route::delete('/gelombang/{id}', 'Panitia\GelombangController@destroy')->name('gelombang.delete');
-
-        //route soal
-        Route::get('/soal/create', 'Panitia\SoalController@create')->name('soal.create');
-        Route::post('/soal', 'Panitia\SoalController@store')->name('soal.store');
-        Route::get('/test/soal/view', 'Panitia\SoalController@index')->name('soal.index');
-        Route::get('/soal/{id}', 'Panitia\SoalController@show')->name('soal.show');
-        Route::get('/soal/{id}/edit', 'Panitia\SoalController@edit')->name('soal.edit');
-        Route::put('/soal/{id}', 'Panitia\SoalController@update')->name('soal.update');
-        Route::delete('/soal/{id}', 'Panitia\SoalController@destroy')->name('soal.delete');
-
-        //route jawaban
-        Route::get('/jawaban/create', 'Panitia\JawabanController@create')->name('jawaban.create');
-        Route::post('/jawaban', 'Panitia\JawabanController@store')->name('jawaban.store');
-        Route::get('/test/jawaban/view', 'Panitia\JawabanController@index')->name('jawaban.index');
-        Route::get('/jawaban/{id}', 'Panitia\JawabanController@show')->name('jawaban.show');
-        Route::get('/jawaban/{id}/edit', 'Panitia\JawabanController@edit')->name('jawaban.edit');
-        Route::put('/jawaban/{id}', 'Panitia\JawabanController@update')->name('jawaban.update');
-        Route::delete('/jawaban/{id}', 'Panitia\JawabanController@destroy')->name('jawaban.delete');
-
-        //route hasil
-        Route::get('/test/hasil/view', 'Panitia\HasilController@index')->name('hasil.index');
-        Route::get('/hasil/detail/{id}', 'Panitia\HasilController@detail')->name('hasil.detail');
+        Route::get('/dashboard/kepala-tu', 'KepalaTU\KepalaTUController@index')->name('pdashboard');
+        Route::get('/hasil', 'KepalaTU\KepalaTUController@hasil')->name('hasil');
+        //route profil 
+        Route::get('/kprofil/create', 'KepalaTU\ProfilController@create')->name('kepala.profil.create');
+        Route::post('/kprofil', 'KepalaTU\ProfilController@store')->name('kepala.profil.store');
+        Route::get('/kprofil/view', 'KepalaTU\ProfilController@index')->name('kepala.profil.index');
+        Route::get('/kprofil/{id}', 'KepalaTU\ProfilController@show')->name('kepala.profil.show');
+        Route::get('/kprofil/{id}/edit', 'KepalaTU\ProfilController@edit')->name('kepala.profil.edit');
+        Route::put('/kprofil/{id}', 'KepalaTU\ProfilController@update')->name('kepala.profil.update');
+        Route::delete('/kprofil/{id}', 'KepalaTU\ProfilController@destroy')->name('kepala.profil.delete');
     });
     Route::group(['middleware' => ['cek_login:1']], function () {
         Route::get('/dashboard', 'Admin\AdminController@index')->name('dashboard');
@@ -124,15 +93,52 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/profil/{id}/edit', 'Admin\ProfilController@edit')->name('profil.edit');
         Route::put('/profil/{id}', 'Admin\ProfilController@update')->name('profil.update');
         Route::delete('/profil/{id}', 'Admin\ProfilController@destroy')->name('profil.delete');
+
+        //route gelombang
+        Route::get('/gelombang/create', 'Admin\GelombangController@create')->name('gelombang.create');
+        Route::post('/gelombang', 'Admin\GelombangController@store')->name('gelombang.store');
+        Route::get('/gelombang/view', 'Admin\GelombangController@index')->name('gelombang.index');
+        Route::get('/gelombang/{id}', 'Admin\GelombangController@show')->name('gelombang.show');
+        Route::get('/gelombang/{id}/edit', 'Admin\GelombangController@edit')->name('gelombang.edit');
+        Route::put('/gelombang/{id}', 'Admin\GelombangController@update')->name('gelombang.update');
+        Route::delete('/gelombang/{id}', 'Admin\GelombangController@destroy')->name('gelombang.delete');
+
+        //route soal
+        Route::get('/test/soal/create', 'Admin\SoalController@create')->name('soal.create');
+        Route::post('/test/soal', 'Admin\SoalController@store')->name('soal.store');
+        Route::get('/test/soal/view', 'Admin\SoalController@index')->name('soal.index');
+        Route::get('/test/soal/{id}', 'Admin\SoalController@show')->name('soal.show');
+        Route::get('/test/soal/{id}/edit', 'Admin\SoalController@edit')->name('soal.edit');
+        Route::put('/test/soal/{id}', 'Admin\SoalController@update')->name('soal.update');
+        Route::delete('/test/soal/{id}', 'Admin\SoalController@destroy')->name('soal.delete');
+
+        //route jawaban
+        Route::get('/test/jawaban/create', 'Admin\JawabanController@create')->name('jawaban.create');
+        Route::post('/test/jawaban', 'Admin\JawabanController@store')->name('jawaban.store');
+        Route::get('/test/jawaban/view', 'Admin\JawabanController@index')->name('jawaban.index');
+        Route::get('/test/jawaban/{id}', 'Admin\JawabanController@show')->name('jawaban.show');
+        Route::get('/test/jawaban/{id}/edit', 'Admin\JawabanController@edit')->name('jawaban.edit');
+        Route::put('/test/jawaban/{id}', 'Admin\JawabanController@update')->name('jawaban.update');
+        Route::delete('/test/jawaban/{id}', 'Admin\JawabanController@destroy')->name('jawaban.delete');
+
+        //route hasil
+        Route::get('/test/hasil/view', 'Admin\HasilController@index')->name('hasil.index');
+        Route::get('/test/hasil/detail/{id}', 'Admin\HasilController@detail')->name('hasil.detail');
+        Route::get('/test/hasil/rekap', 'Admin\HasilController@rekap')->name('hasil.rekap');
+        Route::post('/pendaftar/lulus/{id}', 'Admin\HasilController@updatelulus')->name('pendaftar.updatelulus');
+        Route::post('/pendaftar/tidaklulus/{id}', 'Admin\HasilController@updatetidaklulus')->name('pendaftar.updatetidaklulus');
     });
     Route::group(['middleware' => ['cek_login:3']], function () {
-        Route::get('/form/{id_gelombang}', 'Siswa\SiswaController@index')->name('siswa.index');
+        Route::get('/dashboard/siswa', 'Siswa\SiswaController@index')->name('sdashboard');
+        
+        Route::get('/form/{id_gelombang}', 'Siswa\SiswaController@formulirshow')->name('siswa.form');
         Route::get('/test/{id_gelombang}', 'Siswa\SiswaController@testujian')->name('siswa.test');
         Route::post('/test', 'Siswa\SiswaController@formtest')->name('siswa.formtest');
         Route::post('/form', 'Siswa\SiswaController@formulir')->name('siswa.formulir');
         Route::get('/detailpendaftar', 'Siswa\SiswaController@detailpendaftar')->name('siswa.detail');
+        Route::get('/riwayat', 'Siswa\SiswaController@riwayat')->name('siswa.riwayat');
         Route::get('/pengumuman/{id_gelombang}', 'Siswa\SiswaController@pengumuman')->name('siswa.pengumuman');
-        Route::get('/cetakformulir', 'Siswa\SiswaController@cetakformulir')->name('siswa.cetakformulir');
+        Route::get('/cetakformulir/{id_gelombang}', 'Siswa\SiswaController@cetakformulir')->name('siswa.cetakformulir');
 
 
         Route::get('/ubahpassword', 'Siswa\SiswaController@ubahpassword')->name('siswa.ubahpassword');
@@ -140,7 +146,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
+Route::get('/test/hasil/rekap', 'Admin\HasilController@rekap')->name('hasil.rekap');
 
-
-Route::get('/persyaratan', 'Siswa\SiswaController@persyaratan')->name('siswa.persyaratan');
-Route::get('/profil', 'Siswa\SiswaController@profil')->name('siswa.profil');
+Route::get('/persyaratan', 'DashboardController@persyaratan')->name('persyaratan');
+Route::get('/profil', 'DashboardController@profil')->name('profil');

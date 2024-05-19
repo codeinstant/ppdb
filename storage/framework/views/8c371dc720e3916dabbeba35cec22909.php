@@ -65,7 +65,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3><?php echo e($jurusan); ?></h3>
+                                <h3><?php echo e($gelombang); ?></h3>
 
                                 <p>Jumlah Gelombang</p>
                             </div>
@@ -115,7 +115,7 @@
     </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -
-                        
+                                
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Kodekulaku\projek\ppdb-master\resources\views/admin/index.blade.php ENDPATH**/ ?>

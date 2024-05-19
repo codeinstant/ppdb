@@ -52,16 +52,6 @@ class AuthController extends Controller
             'role_id' => 3
         ]);
 
-        // $latestPenerimaan = \App\Penerimaan::latest()->first();
-        // $latestPenerimaanId = $latestPenerimaan ? $latestPenerimaan->id : null;
-
-        // Pendaftar::create([
-        //     'user_id' => $id->id,
-        //     'status' => 0,
-        //     'penerimaan_id' => $latestPenerimaanId,
-        // ]);
-
-
         return redirect('login')->with('success', 'Register Berhasil !!!');
     }
     public function proseslogin(Request $request)
@@ -74,11 +64,6 @@ class AuthController extends Controller
             'password.required' => 'Password tidak boleh kosong',
         ]);
 
-        // if (Auth::attempt($credentials)) {
-        //     $request->session()->regenerate();
-        //     session(['berhasil_login' => true]);
-        //     return redirect()->intended(route('dashboard'));
-        // }
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             if ($user->role_id == 1 ) {
@@ -89,7 +74,7 @@ class AuthController extends Controller
                 return redirect()->intended(route('pdashboard'));
             } elseif ($user->role_id == 3) {
                 $request->session()->regenerate();
-                return redirect()->intended(route('index'));
+                return redirect()->intended(route('sdashboard'));
             }
             return redirect()->intended(route('login'));
         }

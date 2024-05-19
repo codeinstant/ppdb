@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Panitia;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Jawaban;
 use App\Soal;
 use Illuminate\Http\Request;
 
-class JawabanController extends Controller
+class SoalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,9 @@ class JawabanController extends Controller
      */
     public function index()
     {
-        $Jawaban = Jawaban::all();
-        return view('panitia.jawaban.index', compact('Jawaban'));
+        $Soal = Soal::all();
+        // echo dd($Soal[0]->jawaban->count());
+        return view('admin.soal.index', compact('Soal'));
     }
 
     /**
@@ -27,8 +27,7 @@ class JawabanController extends Controller
      */
     public function create()
     {
-        $soal = Soal::all();
-        return view('panitia.jawaban.create', compact('soal'));
+        return view('admin.soal.create');
     }
 
     /**
@@ -40,14 +39,13 @@ class JawabanController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'soal_id' => 'required|exists:soal_kuis,id',
-            'jawaban' => 'required|max:128',
-            'kunci' => "required|in:benar,salah",
+            'soal' => 'required|max:255',
+            'tipe_soal' => 'required|max:64',
         ]);
 
-        Jawaban::create($validated);
+        Soal::create($validated);
 
-        return redirect(route('jawaban.index'))->with('sukses', 'Data berhasil ditambahkan');
+        return redirect(route('soal.index'))->with('sukses', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -68,9 +66,8 @@ class JawabanController extends Controller
      */
     public function edit($id)
     {
-        $Jawaban = Jawaban::find($id);
-        $soal = Soal::all();
-        return view('panitia.jawaban.edit', compact('Jawaban', 'soal'));
+        $Soal = Soal::find($id);
+        return view('admin.soal.edit', compact('Soal'));
     }
 
     /**
@@ -83,15 +80,14 @@ class JawabanController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'soal_id' => 'required|exists:soal_kuis,id',
-            'jawaban' => 'required|max:128',
-            'kunci' => 'required|in:benar,salah',
+            'soal' => 'required|max:255',
+            'tipe_soal' => 'required|max:64',
         ]);
 
-        Jawaban::where('id', $id)
+        Soal::where('id', $id)
             ->update($validated);
 
-        return redirect(route('jawaban.index'))->with('suksesEdit', 'Data Berhasil Di Edit');
+        return redirect(route('soal.index'))->with('suksesEdit', 'Data Berhasil Di Edit');
     }
 
     /**
@@ -102,9 +98,9 @@ class JawabanController extends Controller
      */
     public function destroy($id)
     {
-        $Jawaban = Jawaban::find($id);
-        $Jawaban->delete();
+        $Soal = Soal::find($id);
+        $Soal->delete();
 
-        return redirect(route('jawaban.index'))->with('delete', 'Data berhasil dihapus');
+        return redirect(route('soal.index'))->with('delete', 'Data berhasil dihapus');
     }
 }

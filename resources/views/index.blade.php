@@ -17,67 +17,31 @@
 
             <hr class="my-4">
             <p>Situs ini dipersiapkan sebagai pengganti pusat informasi dan pengolahan seleksi data siswa peserta PPDB
-                Provinsi DKI Jakarta Periode 2022 / 2023 secara online real time process untuk pelaksanaan PPDB Online.</p>
+                Provinsi Sumatera Selatan Periode 2024 / 2025 secara online real time process untuk pelaksanaan PPDB Online.
+            </p>
 
-            @if ($pendaftar == null)
-                @foreach ($gelombang as $key => $sek)
-                    <hr>
-                    <h4>Gelombang ke {{ $sek['gelombang'] }}</h4>
-                    <p>Tahun angkatan {{ $sek['tahun_angkatan'] }}</p>
-                    <p>Open at {{ $sek['buka'] }}</p>
-                    @if ($can_daftar[$key])
-                        <p><a href="/form/{{ $sek['id'] }}" class="btn btn-primary">Daftar Sekarang!</a></p>
-                    @endif
-                    <p>Close at {{ $sek['tutup'] }}</p>
-                @endforeach
-            @else
-                @php
-                    $sudah_lulus = false;
-                    foreach ($pendaftar as $i => $p) {
-                        if ($p->status == 4) {
-                            $sudah_lulus = true;
-                        }
-                    }
-                @endphp
-                @if ($sudah_lulus)
-                    <h4>Halo {{ Auth::user()->name }}</h4>
-                @else
-                    @foreach ($pendaftar as $i => $p)
-                        @php
-                            $print = true;
-                        @endphp
-                        @foreach ($gelombang as $j => $g)
-                            @if ($p->penerimaan_id == $g['id'])
-                                <hr>
-                                <h4>Gelombang ke {{ $p->penerimaan->gelombang }}</h4>
-                                <p>Tahun angkatan {{ $p->penerimaan->tahun_angkatan }}</p>
-                                <p><a href="/pengumuman/{{ $g['id'] }}" class="btn btn-primary">Lihat Pengumuman</a></p>
-                                @php
-                                    $print = false;
-                                    break;
-                                @endphp
-                            @else
-                                <hr>
-                                <h4>Gelombang ke {{ $g['gelombang'] }}</h4>
-                                <p>Tahun angkatan {{ $g['tahun_angkatan'] }}</p>
-                                <p>Open at {{ $g['buka'] }}</p>
-                                @if ($can_daftar[$j])
-                                    <p><a href="/form/{{ $g['id'] }}" class="btn btn-primary">Daftar Sekarang!</a></p>
-                                @endif
-                                <p>Close at {{ $g['tutup'] }}
-                                    {{ $print }}</p>
-                            @endif
-                        @endforeach
-                        @if ($print)
-                            <hr>
-                            <h4>Gelombang ke {{ $p->penerimaan->gelombang }}</h4>
-                            <p>Tahun angkatan {{ $p->penerimaan->tahun_angkatan }}</p>
-                            <p><a href="/pengumuman/{{ $p->penerimaan->id }}" class="btn btn-primary">Lihat Pengumuman</a>
-                            </p>
+            @foreach ($gelombang as $key => $sek)
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Gelombang ke {{ $sek['gelombang'] }}</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Tahun angkatan {{ $sek['tahun_angkatan'] }}</p>
+                        <p>Open at {{ $sek['buka'] }}</p>
+                        @if ($can_daftar[$key])
+                            <p><a href="/form/{{ $sek['id'] }}" class="btn btn-primary">Daftar Sekarang!</a></p>
                         @endif
-                    @endforeach
-                @endif
-            @endif
+                        <p>Close at {{ $sek['tutup'] }}</p>
+                    </div>
+                </div>
+                <!-- /.card -->
+            @endforeach
             {{-- <p class="lead">
       @guest
       <a class="btn btn-primary btn-lg" href="{{ route('login') }}" role="button">Log In</a>

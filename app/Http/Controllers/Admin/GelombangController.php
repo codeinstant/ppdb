@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Panitia;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Penerimaan;
@@ -16,7 +16,7 @@ class GelombangController extends Controller
     public function index()
     {
         $gelombang = Penerimaan::all();
-        return view('panitia.gelombang.index', compact('gelombang'));
+        return view('admin.gelombang.index', compact('gelombang'));
     }
 
     /**
@@ -26,7 +26,7 @@ class GelombangController extends Controller
      */
     public function create()
     {
-        return view('panitia.gelombang.create');
+        return view('admin.gelombang.create');
     }
 
     /**
@@ -85,7 +85,7 @@ class GelombangController extends Controller
     public function edit($id)
     {
         $gelombang = Penerimaan::find($id);
-        return view('panitia.gelombang.edit', compact('gelombang'));
+        return view('admin.gelombang.edit', compact('gelombang'));
     }
 
     /**

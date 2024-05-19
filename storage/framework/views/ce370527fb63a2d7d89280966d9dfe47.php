@@ -89,8 +89,8 @@
                                     </tr>
                                     <tr>
                                         <td>Pas Foto 3 x 4</td>
-                                        <td><iframe src="<?php echo e(asset('storage/' . $detail->foto)); ?>" alt=""
-                                                style="height: 150px;"></iframe></td>
+                                        <td><img src="<?php echo e(asset('storage/' . $detail->foto)); ?>" alt=""
+                                                style="height: 150px;"></td>
                                         <td>Ijasah</td>
                                         <td><img src="<?php echo e(asset('storage/' . $detail->ijasah)); ?>" alt=""
                                                 style="height: 150px"></td>

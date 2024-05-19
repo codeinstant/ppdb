@@ -5,16 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Penerimaan;
 use App\Pendaftar;
+use App\Persyaratan;
+use App\Profil;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $pendaftar = null;
-        if (Auth::check() && Auth::user()->role_id == 3) {
-            $pendaftar = Pendaftar::where('user_id', Auth::user()->id)->get();
-        }
         $gelombangAll = Penerimaan::all();
         $gelombang = [];
         $can_daftar = [];
@@ -31,6 +29,16 @@ class DashboardController extends Controller
                 }
             }
         }
-        return view('index', compact('gelombang', 'can_daftar', 'pendaftar'));
+        return view('index', compact('gelombang', 'can_daftar'));
+    }
+    public function persyaratan()
+    {
+        $persyaratan = Persyaratan::all();
+        return view('persyaratan', compact('persyaratan'));
+    }
+    public function profil()
+    {
+        $profil = Profil::all()->first();
+        return view('profil', compact('profil'));
     }
 }

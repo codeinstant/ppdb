@@ -16,68 +16,31 @@
 
             <hr class="my-4">
             <p>Situs ini dipersiapkan sebagai pengganti pusat informasi dan pengolahan seleksi data siswa peserta PPDB
-                Provinsi DKI Jakarta Periode 2022 / 2023 secara online real time process untuk pelaksanaan PPDB Online.</p>
+                Provinsi Sumatera Selatan Periode 2024 / 2025 secara online real time process untuk pelaksanaan PPDB Online.
+            </p>
 
-            <?php if($pendaftar == null): ?>
-                <?php $__currentLoopData = $gelombang; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $sek): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <hr>
-                    <h4>Gelombang ke <?php echo e($sek['gelombang']); ?></h4>
-                    <p>Tahun angkatan <?php echo e($sek['tahun_angkatan']); ?></p>
-                    <p>Open at <?php echo e($sek['buka']); ?></p>
-                    <?php if($can_daftar[$key]): ?>
-                        <p><a href="/form/<?php echo e($sek['id']); ?>" class="btn btn-primary">Daftar Sekarang!</a></p>
-                    <?php endif; ?>
-                    <p>Close at <?php echo e($sek['tutup']); ?></p>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <?php else: ?>
-                <?php
-                    $sudah_lulus = false;
-                    foreach ($pendaftar as $i => $p) {
-                        if ($p->status == 4) {
-                            $sudah_lulus = true;
-                        }
-                    }
-                ?>
-                <?php if($sudah_lulus): ?>
-                    <h4>Halo <?php echo e(Auth::user()->name); ?></h4>
-                <?php else: ?>
-                    <?php $__currentLoopData = $pendaftar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php
-                            $print = true;
-                        ?>
-                        <?php $__currentLoopData = $gelombang; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $j => $g): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php if($p->penerimaan_id == $g['id']): ?>
-                                <hr>
-                                <h4>Gelombang ke <?php echo e($p->penerimaan->gelombang); ?></h4>
-                                <p>Tahun angkatan <?php echo e($p->penerimaan->tahun_angkatan); ?></p>
-                                <p><a href="/pengumuman/<?php echo e($g['id']); ?>" class="btn btn-primary">Lihat Pengumuman</a></p>
-                                <?php
-                                    $print = false;
-                                    break;
-                                ?>
-                            <?php else: ?>
-                                <hr>
-                                <h4>Gelombang ke <?php echo e($g['gelombang']); ?></h4>
-                                <p>Tahun angkatan <?php echo e($g['tahun_angkatan']); ?></p>
-                                <p>Open at <?php echo e($g['buka']); ?></p>
-                                <?php if($can_daftar[$j]): ?>
-                                    <p><a href="/form/<?php echo e($g['id']); ?>" class="btn btn-primary">Daftar Sekarang!</a></p>
-                                <?php endif; ?>
-                                <p>Close at <?php echo e($g['tutup']); ?>
+            <?php $__currentLoopData = $gelombang; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $sek): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Gelombang ke <?php echo e($sek['gelombang']); ?></h3>
 
-                                    <?php echo e($print); ?></p>
-                            <?php endif; ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php if($print): ?>
-                            <hr>
-                            <h4>Gelombang ke <?php echo e($p->penerimaan->gelombang); ?></h4>
-                            <p>Tahun angkatan <?php echo e($p->penerimaan->tahun_angkatan); ?></p>
-                            <p><a href="/pengumuman/<?php echo e($p->penerimaan->id); ?>" class="btn btn-primary">Lihat Pengumuman</a>
-                            </p>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Tahun angkatan <?php echo e($sek['tahun_angkatan']); ?></p>
+                        <p>Open at <?php echo e($sek['buka']); ?></p>
+                        <?php if($can_daftar[$key]): ?>
+                            <p><a href="/form/<?php echo e($sek['id']); ?>" class="btn btn-primary">Daftar Sekarang!</a></p>
                         <?php endif; ?>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                <?php endif; ?>
-            <?php endif; ?>
+                        <p>Close at <?php echo e($sek['tutup']); ?></p>
+                    </div>
+                </div>
+                <!-- /.card -->
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             
         </div>
     </div>

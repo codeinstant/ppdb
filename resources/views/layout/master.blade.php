@@ -25,7 +25,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="wrapper">
 
         <!-- Navbar -->
-        @if (!request()->is('test*'))
+        @if (
+            !request()->is('test*') &&
+                !request()->is('ubahpassword*') &&
+                !request()->is('pengumuman*') &&
+                !request()->is('form*'))
             @include('layout.navbar')
         @endif
         <!-- /.navbar -->
@@ -51,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            <strong>Copyright &copy; 2024 <a href="https://kodekulaku.com">Kodekulaku</a>.</strong> All rights
             reserved.
         </footer>
     </div>

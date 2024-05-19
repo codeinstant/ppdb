@@ -1,4 +1,4 @@
-@extends('layouts.pmain')
+@extends('layouts.main')
 @section('title', 'Detail Hasil Test')
 @push('css')
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
@@ -43,6 +43,15 @@
                                         <td>Nama</td>
                                         <td>: {{ $detail->user->name }}</td>
                                     </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    @php
+                                        $skor_akhir = 0;
+                                    @endphp
                                     @foreach ($detail->hasil_kuis as $i => $hk)
                                         <tr>
                                             <td>Soal No {{ $i + 1 }}</td>
@@ -50,27 +59,55 @@
                                             <td>Jawaban</td>
                                             <td>: {{ $hk->Jawaban->jawaban }} ( {{ $hk->Jawaban->kunci }} )</td>
                                         </tr>
+                                        @php
+                                            if ($hk->Jawaban->kunci === 'benar') {
+                                                $skor_akhir += 1;
+                                            }
+                                        @endphp
                                     @endforeach
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Penilaian</b></td>
+                                        <td>: Jumlah Benar * 100 / Jumlah Soal</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Skor Akhir</td>
+                                        <td>: {{ ($skor_akhir * 100) / $detail->hasil_kuis->count() }}</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
-                            @if ($detail->status == 1)
-                                <!-- Jika status = 1 -->
-                                <form action="{{ route('pendaftar.updateterima', $detail->id) }}" method="POST"
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            @if ($detail->status == 4)
+                                <!-- Jika status = 4 -->
+                                <form action="{{ route('pendaftar.updatelulus', $detail->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
-                                    <button class="btn btn-success" onclick="return confirm('Apakah anda ingin menerima?')">
-                                        <i class="fas fa-check-circle"></i> Terima
+                                    <button class="btn btn-success"
+                                        onclick="return confirm('Apakah anda ingin meluluskan?')">
+                                        <i class="fas fa-check-circle"></i> Lulus
                                     </button>
                                 </form>
-                                <form action="{{ route('pendaftar.updatetolak', $detail->id) }}" method="POST"
+                                <form action="{{ route('pendaftar.updatetidaklulus', $detail->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
-                                    <button class="btn btn-danger" onclick="return confirm('Apakah anda ingin menolak?')">
-                                        <i class="fas fa-times-circle"></i> Tolak
+                                    <button class="btn btn-danger"
+                                        onclick="return confirm('Apakah anda ingin tidak meluluskan?')">
+                                        <i class="fas fa-times-circle"></i> Tidak Lulus
                                     </button>
                                 </form>
-                            @elseif ($detail->status == 2)
-                                <!-- Jika status = 2 atau 3 -->
+                            @elseif ($detail->status == 5)
+                                <!-- Jika status = 5 atau 6 -->
                                 <!-- Tombol untuk memicu modal -->
                                 <button class="btn btn-primary" data-toggle="modal"
                                     data-target="#modal{{ $detail->id }}">
@@ -91,20 +128,20 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Isi modal, seperti form untuk mengubah status -->
-                                                <form action="{{ route('pendaftar.updatetolak', $detail->id) }}"
+                                                <form action="{{ route('pendaftar.updatetidaklulus', $detail->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     <button class="btn btn-danger"
-                                                        onclick="return confirm('Apakah anda ingin menolak?')">
-                                                        <i class="fas fa-times-circle"></i> Tolak
+                                                        onclick="return confirm('Apakah anda ingin tidak meluluskan?')">
+                                                        <i class="fas fa-times-circle"></i> Tidak Lulus
                                                     </button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @elseif ($detail->status == 3)
-                                <!-- Jika status = 2 atau 3 -->
+                            @elseif ($detail->status == 6)
+                                <!-- Jika status = 5 atau 6 -->
                                 <!-- Tombol untuk memicu modal -->
                                 <button class="btn btn-primary" data-toggle="modal"
                                     data-target="#modal{{ $detail->id }}">
@@ -125,12 +162,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Isi modal, seperti form untuk mengubah status -->
-                                                <form action="{{ route('pendaftar.updateterima', $detail->id) }}"
+                                                <form action="{{ route('pendaftar.updatelulus', $detail->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     <button class="btn btn-success"
-                                                        onclick="return confirm('Apakah anda ingin menerima?')">
-                                                        <i class="fas fa-check-circle"></i> Terima
+                                                        onclick="return confirm('Apakah anda ingin meluluskan?')">
+                                                        <i class="fas fa-check-circle"></i> Lulus
                                                     </button>
                                                 </form>
                                             </div>
@@ -139,7 +176,6 @@
                                 </div>
                             @endif
                         </div>
-                        <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
                 </div>

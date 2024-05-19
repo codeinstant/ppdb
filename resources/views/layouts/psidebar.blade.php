@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('dashboard') }}" class="brand-link">
+    <a href="{{ route('pdashboard') }}" class="brand-link">
         <span class="brand-text font-weight-bold ml-2">PPDB</span>
     </a>
 
@@ -9,7 +9,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                <a href="#" class="d-block">Admin</a>
+                <a href="#" class="d-block">Kepala TU</a>
             </div>
         </div>
 
@@ -21,51 +21,27 @@
              with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="{{ route('pdashboard') }}"
-                        class="nav-link {{ request()->is('pdashboard*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('dashboard/kepala-tu') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
                         </p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview {{ request()->is('test*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('test*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-address-card"></i>
+                <li class="nav-item">
+                    <a href="{{ route('hasil') }}" class="nav-link {{ request()->is('hasil') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
-                            Test
-                            <i class="fas fa-angle-left right"></i>
+                            Hasil
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('soal.index') }}"
-                                class="nav-link {{ request()->is('test/soal*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Soal</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('jawaban.index') }}"
-                                class="nav-link {{ request()->is('test/jawaban*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Jawaban</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('hasil.index') }}"
-                                class="nav-link {{ request()->is('test/hasil*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Hasil</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('gelombang.index') }}"
-                        class="nav-link {{ request()->is('gelombang*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cogs"></i>
+                    <a href="{{ route('kepala.profil.index') }}"
+                        class="nav-link {{ request()->is('kprofil*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-school"></i>
                         <p>
-                            Gelombang
+                            Profil Sekolah
                         </p>
                     </a>
                 </li>

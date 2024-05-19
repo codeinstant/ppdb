@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
 use App\Pendaftar;
-use App\Persyaratan;
 use App\Jurusan;
-use App\Profil;
 use App\User;
 use App\Penerimaan;
 use App\Soal;
 use App\HasilKuis;
+use App\Profil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +18,29 @@ use PDF;
 
 class SiswaController extends Controller
 {
-    public function index($id_gelombang)
+    public function index()
+    {
+        $pendaftar = null;
+        $pendaftar = Pendaftar::where('user_id', Auth::user()->id)->get();
+        $gelombangAll = Penerimaan::all();
+        $gelombang = [];
+        $can_daftar = [];
+        foreach ($gelombangAll as $key => $value) {
+            date_default_timezone_set("Asia/Bangkok");
+            $now = strtotime(date('Y-m-d', time()));
+            $buka = strtotime($value['buka']);
+            $tutup = strtotime($value['tutup']);
+            if ($now < $tutup) {
+                $gelombang[$key] = $value;
+                $can_daftar[$key] = true;
+                if ($buka > $now) {
+                    $can_daftar[$key] = false;
+                }
+            }
+        }
+        return view('siswa.index', compact('pendaftar', 'gelombang', 'can_daftar'));
+    }
+    public function formulirshow($id_gelombang)
     {
         $gelombang = Penerimaan::findOrFail($id_gelombang);
         date_default_timezone_set("Asia/Bangkok");
@@ -47,7 +68,7 @@ class SiswaController extends Controller
         $pendaftar = Pendaftar::where('user_id', $id)->where('penerimaan_id', $id_gelombang)->first();
         $soal = Soal::all();
         if ($pendaftar->status == 3) {
-            return redirect('/');   
+            return redirect(route('sdashboard'))->with('gagal', 'Anda tidak punya Akses untuk melakukan ini');
         }
         return view('siswa.formkuis', compact('pendaftar', 'gelombang', 'soal'));
     }
@@ -62,29 +83,15 @@ class SiswaController extends Controller
         
         $pendaftar = Pendaftar::findOrFail($request->input('pendaftar'));
 
-        $nilai = 0;
-        $jlh_soal = $soal->count();
         foreach ($soal as $i => $s) {
-            foreach($s->jawaban as $j => $jw){
-                if ($request->input('jawaban'.$i) == $jw->id && $jw->kunci === "benar") {
-                    $nilai +=1;
-                }
-            }
             HasilKuis::create([
                 'pendaftar_id' => $request->input('pendaftar'),
                 'jawaban_id' => $request->input('jawaban'.$i)
             ]);
         }
-        if ($nilai > $jlh_soal/2) {
-            $pendaftar->update([
-                'status' => 4,
-            ]);
-    
-        }else{
-            $pendaftar->update([
-                'status' => 5,
-            ]);
-        }
+        $pendaftar->update([
+            'status' => 4,
+        ]);
         return back()->with('sukses', 'Data berhasil di kirim slihkan lihat hasil dipengumuman');
     }
 
@@ -160,6 +167,12 @@ class SiswaController extends Controller
 
         // return view('siswa.detail', compact('pendaftar'));
     }
+    public function riwayat()
+    {
+        $pendaftar = Pendaftar::where('user_id', auth()->user()->id)->get();
+
+        return view('siswa.riwayat', compact('pendaftar'));
+    }
 
     public function pengumuman($pen)
     {
@@ -189,21 +202,17 @@ class SiswaController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-        return redirect(route('siswa.ubahpassword'))->with('sukses', 'Password Berhasil Di Ubah');
+        return redirect(route('sdashboard'))->with('sukses', 'Password Berhasil Di Ubah');
     }
 
-    public function cetakformulir()
+    public function cetakformulir($pen)
     {
         $id = Auth::user()->id;
-        $pendaftar = Pendaftar::where('user_id', $id)->first();
+        $pendaftar = Pendaftar::where('user_id', $id)->where('penerimaan_id', $pen)->first();
+        $profil = Profil::all()->first();
 
-        $pdf = PDF::loadView('siswa.cetakformulir', compact('pendaftar'));
+        $pdf = PDF::loadView('siswa.cetakformulir', compact('pendaftar', 'profil'));
         return $pdf->download('Daftar-Ulang.pdf');
     }
 
-    public function persyaratan()
-    {
-        $persyaratan = Persyaratan::all();
-        return view('siswa.persyaratan', compact('persyaratan'));
-    }
 }

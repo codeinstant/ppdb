@@ -36,10 +36,11 @@
                                         href="/test/{{ $pendaftar->penerimaan->id }}" class="btn btn-success">Test</a><br>
                                 @elseif($pendaftar->status == 3)
                                     Maaf anda tidak lolos administrasi, silahkan untuk mendaftar di sekolah lainnya.
-                                @elseif($pendaftar->status == 4)
-                                    Selamat anda diterima silahkan <a href="{{ route('siswa.cetakformulir') }}">Cetak
-                                        Formulir</a><br>
                                 @elseif($pendaftar->status == 5)
+                                    Selamat anda diterima silahkan <a
+                                        href="{{ route('siswa.cetakformulir', $pendaftar->penerimaan->id) }}">Cetak
+                                        Formulir</a><br>
+                                @elseif($pendaftar->status == 6)
                                     Maaf anda tidak diterima, silahkan untuk mencoba gelombang berikutnya.
                                 @else
                                     Menunggu Konfirmasi Admin

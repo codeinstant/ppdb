@@ -1,5 +1,5 @@
-@extends('layouts.pmain')
-@section('title', 'Data Hasil')
+@extends('layouts.main')
+@section('title', 'Riwayat Pendaftaran')
 @push('css')
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
 @endpush
@@ -49,33 +49,55 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>NIK</th>
-                                        <th>Nama</th>
                                         <th>Gelombang</th>
                                         <th>Tahun Angkatan</th>
                                         <th>Jurusan</th>
-                                        <th>Hasil</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     @foreach ($pendaftar as $i => $pendaf)
-                                        {{-- @if ($pendaf->status == 1) --}}
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $pendaf->nik }}</td>
-                                            <td>{{ $pendaf->user->name }}</td>
                                             <td>{{ $pendaf->penerimaan->gelombang }}</td>
                                             <td>{{ $pendaf->penerimaan->tahun_angkatan }}</td>
                                             <td>{{ $pendaf->jurusan->nama }}</td>
-                                            <td class="{{ $class[$i] }}">{{ $hasil[$i] }}</td>
-                                            <td>
-                                                <a href="{{ route('hasil.detail', $pendaf->id) }}"
-                                                    class="btn btn-sm btn-info"><i class="fas fa-eye"></i> Detail</a>
-                                            </td>
+                                            @if ($pendaf->status == 1)
+                                                <td class="bg-warning">Proses Administrasi...</td>
+                                                <td class="bg-light">No Action</td>
+                                            @elseif ($pendaf->status == 2)
+                                                <td class="bg-success">Lolos Administrasi</td>
+                                                <td class="bg-dark"><a href="/test/{{ $pendaf->penerimaan->id }}"
+                                                        class="btn btn-sm btn-success">Kerjakan Test</a>
+                                                </td>
+                                            @elseif ($pendaf->status == 3)
+                                                <td class="bg-danger">Gagal Administrasi</td>
+                                                <td class="bg-dark"><a
+                                                        href="{{ route('siswa.pengumuman', $pendaf->penerimaan_id) }}"
+                                                        class="btn btn-sm btn-info"><i class="fas fa-eye"></i> Detail</a>
+                                                </td>
+                                            @elseif ($pendaf->status == 4)
+                                                <td class="bg-warning">Proses Penilaian...</td>
+                                                <td class="bg-light">No Action</td>
+                                            @elseif ($pendaf->status == 5)
+                                                <td class="bg-success">Selamat Anda Lulus</td>
+                                                <td class="bg-dark"><a
+                                                        href="{{ route('siswa.pengumuman', $pendaf->penerimaan_id) }}"
+                                                        class="btn btn-sm btn-info"><i class="fas fa-eye"></i> Detail</a>
+                                                </td>
+                                            @elseif ($pendaf->status == 6)
+                                                <td class="bg-danger">Maaf Anda Gagal</td>
+                                                <td class="bg-dark"><a
+                                                        href="{{ route('siswa.pengumuman', $pendaf->penerimaan_id) }}"
+                                                        class="btn btn-sm btn-info"><i class="fas fa-eye"></i> Detail</a>
+                                                </td>
+                                            @else
+                                                <td class="bg-danger">Someting Wrong..</td>
+                                                <td class="bg-danger">Someting Wrong..</td>
+                                            @endif
                                         </tr>
-                                        {{-- @endif --}}
                                     @endforeach
 
 

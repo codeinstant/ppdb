@@ -1,4 +1,4 @@
-@extends('layouts.pmain')
+@extends('layouts.main')
 @section('title', 'Jawaban')
 @push('css')
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
