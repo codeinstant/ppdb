@@ -52,9 +52,20 @@ class SiswaController extends Controller
 
         $id = Auth::user()->id;
         $pendaftar = Pendaftar::where('user_id', $id)->where('penerimaan_id', $id_gelombang)->first();
+        if ($pendaftar != null) {
+            if ($pendaftar->count() == 0) {
+                $pendaftar = null;
+            }
+        }
         $jurusan = Jurusan::all();
         // echo dd($pendaftar);
         return view('siswa.form', compact('jurusan', 'pendaftar', 'gelombang'));
+    }
+    public function formulireditshow($id)
+    {
+        $pendaftar = Pendaftar::findOrFail($id);
+        $jurusan = Jurusan::all();
+        return view('siswa.formedit', compact('pendaftar', 'jurusan'));
     }
 
     public function testujian($id_gelombang)
@@ -126,8 +137,8 @@ class SiswaController extends Controller
         // if ($request->) {
         //     # code...
         // }
-        $foto = $request->file('foto')->store('foto');
-        $ijasah = $request->file('ijasah')->store('ijasah');
+        $foto = $request->file('foto')->store('foto', ['disk' => 'public_uploads']);
+        $ijasah = $request->file('ijasah')->store('ijasah', ['disk' => 'public_uploads']);
         $id = auth()->user()->id;
 
         Pendaftar::create([
@@ -159,7 +170,73 @@ class SiswaController extends Controller
                 'status' => 1,
             ]);
 
-        return back()->with('sukses', 'Data berhasil di kirim slihkan menggunggu pengumuman');
+        return back()->with('sukses', 'Data berhasil di kirim silahkan menggunggu pengumuman');
+    }
+    public function formulireditijasah(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:pendaftar,id',
+            'ijasah' =>  'required|mimes:jpg,png|max:2048'
+        ]);
+        $ijasah = $request->file('ijasah')->store('ijasah', ['disk' => 'public_uploads']);
+        Pendaftar::where('id', $request->id)->update([
+            'ijasah' => $ijasah
+        ]);
+        return redirect(route('siswa.riwayat'))->with('sukses', 'Ijasah berhasil di ubah');
+    }
+    public function formuliredit(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:pendaftar,id',
+            'nik' => 'required',
+            'nama' => 'required',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required',
+            'kecamatan' => 'required',
+            'kabupaten' => 'required',
+            'provinsi' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'ipa' => 'required',
+            'bhs_indo' => 'required',
+            'bhs_inggris' => 'required',
+            'matematika' => 'required',
+            'jurusan_id' => 'required|exists:jurusan,id',
+            'no_telp' => 'required',
+            'nama_ayah' => 'required',
+            'nama_ibu' => 'required',
+            'alamat_ortu' => 'required',
+            'no_hp_ortu' => 'required',
+            'pekerjaan_ayah' => 'required',
+            'pekerjaan_ibu' => 'required',
+            'penghasilan_ortu' => 'required',
+        ]);
+
+        Pendaftar::where('id', $request->id)->update([
+                'nik' => $request->nik,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'alamat' => $request->alamat,
+                'kecamatan' => $request->kecamatan,
+                'kabupaten' => $request->kabupaten,
+                'provinsi' => $request->provinsi,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'ipa' => $request->ipa,
+                'bhs_indo' => $request->bhs_indo,
+                'bhs_inggris' => $request->bhs_inggris,
+                'matematika' => $request->matematika,
+                'jurusan_id' => $request->jurusan_id,
+                'no_telp' => $request->no_telp,
+                'nama_ayah' => $request->nama_ayah,
+                'nama_ibu' => $request->nama_ibu,
+                'alamat_ortu' => $request->alamat_ortu,
+                'no_hp_ortu' => $request->no_hp_ortu,
+                'pekerjaan_ayah' => $request->pekerjaan_ayah,
+                'pekerjaan_ibu' => $request->pekerjaan_ibu,
+                'penghasilan_ortu' => $request->penghasilan_ortu,
+            ]);
+        User::where('id', auth()->user()->id)->update(['name'=>$request->nama]);
+        return back()->with('sukses', 'Data berhasil di edit');
     }
     public function detailpendaftar($id)
     {

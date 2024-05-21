@@ -38,7 +38,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/kprofil/{id}', 'KepalaTU\ProfilController@show')->name('kepala.profil.show');
         Route::get('/kprofil/{id}/edit', 'KepalaTU\ProfilController@edit')->name('kepala.profil.edit');
         Route::put('/kprofil/{id}', 'KepalaTU\ProfilController@update')->name('kepala.profil.update');
+        Route::put('/kprofil/logo/{id}', 'KepalaTU\ProfilController@updatelogo')->name('kepala.profil.updatelogo');
         Route::delete('/kprofil/{id}', 'KepalaTU\ProfilController@destroy')->name('kepala.profil.delete');
+        
+        Route::get('/diterima', 'KepalaTU\KepalaTUController@terima')->name('terima');
+        Route::get('/ditolak', 'KepalaTU\KepalaTUController@tolak')->name('tolak');
+        
+        Route::get('/rekap/terima', 'KepalaTU\KepalaTUController@rekapterima')->name('rekap.terima');
+        Route::get('/rekap/tolak', 'KepalaTU\KepalaTUController@rekaptolak')->name('rekap.tolak');
     });
     Route::group(['middleware' => ['cek_login:1']], function () {
         Route::get('/dashboard', 'Admin\AdminController@index')->name('dashboard');
@@ -92,6 +99,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/profil/{id}', 'Admin\ProfilController@show')->name('profil.show');
         Route::get('/profil/{id}/edit', 'Admin\ProfilController@edit')->name('profil.edit');
         Route::put('/profil/{id}', 'Admin\ProfilController@update')->name('profil.update');
+        Route::put('/profil/logo/{id}', 'Admin\ProfilController@updatelogo')->name('profil.updatelogo');
         Route::delete('/profil/{id}', 'Admin\ProfilController@destroy')->name('profil.delete');
 
         //route gelombang
@@ -132,9 +140,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/dashboard/siswa', 'Siswa\SiswaController@index')->name('sdashboard');
         
         Route::get('/form/{id_gelombang}', 'Siswa\SiswaController@formulirshow')->name('siswa.form');
+        Route::get('/formedit/{id}', 'Siswa\SiswaController@formulireditshow')->name('siswa.formedit');
         Route::get('/test/{id_gelombang}', 'Siswa\SiswaController@testujian')->name('siswa.test');
         Route::post('/test', 'Siswa\SiswaController@formtest')->name('siswa.formtest');
         Route::post('/form', 'Siswa\SiswaController@formulir')->name('siswa.formulir');
+        Route::post('/formedit', 'Siswa\SiswaController@formuliredit')->name('siswa.formuliredit');
+        Route::post('/formeditijasah', 'Siswa\SiswaController@formulireditijasah')->name('siswa.formulireditijasah');
         Route::get('/detailpendaftar', 'Siswa\SiswaController@detailpendaftar')->name('siswa.detail');
         Route::get('/riwayat', 'Siswa\SiswaController@riwayat')->name('siswa.riwayat');
         Route::get('/pengumuman/{id_gelombang}', 'Siswa\SiswaController@pengumuman')->name('siswa.pengumuman');

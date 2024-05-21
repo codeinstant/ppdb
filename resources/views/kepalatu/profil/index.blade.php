@@ -77,12 +77,58 @@
                                             <td>Email Sekolah</td>
                                             <td>: {{ $detail->email_sekolah }}</td>
                                             <td>Logo Sekolah</td>
-                                            <td>: {{ $detail->logo_sekolah }}</td>
+                                            <td>: <img src="{{ asset('uploads/' . $detail->logo_sekolah) }}" alt=""
+                                                    style="height: 150px;"></td>
                                         </tr>
 
                                         <td>
                                             <a href="{{ route('kepala.profil.edit', $detail->id) }}"
                                                 class="btn btn-sm btn-success"><i class="fas fa-edit"></i> Edit</a>
+                                            <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                                data-target="#modal{{ $detail->id }}">
+                                                <i class="fas fa-edit"></i> Edit Logo
+                                            </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modal{{ $detail->id }}" tabindex="-1"
+                                                role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="modalTitle">Ubah Logo</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Isi modal, seperti form untuk mengubah status -->
+                                                            <form
+                                                                action="{{ route('kepala.profil.updatelogo', $detail->id) }}"
+                                                                method="POST" enctype="multipart/form-data"
+                                                                class="d-inline">
+                                                                @csrf
+                                                                @method('put')
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="exampleFormControlFile1">Logo
+                                                                        Sekolah</label>
+                                                                    <input type="file" name="logo_sekolah"
+                                                                        class="form-control-file @error('logo_sekolah') is-invalid @enderror"
+                                                                        id="exampleFormControlFile1">
+                                                                    @error('logo_sekolah')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                <button class="btn btn-primary" type="submit"
+                                                                    onclick="return confirm('Apakah anda benar ingin merubah logo sekolah?')">
+                                                                    <i class="fas fa-check-circle"></i> Ubah
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                         </tr>
                                     @endforeach

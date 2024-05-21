@@ -38,8 +38,8 @@
                                     </div>
                                 <?php endif; ?>
                                 <div class="ml-3 mr-3">
-                                    <?php if($pendaftar->count() == 0): ?>
-                                        <form action="<?php echo e(route('siswa.formulir')); ?>" method="POST"
+                                    <?php if($pendaftar == null): ?>
+                                        <form action="<?php echo e(route('siswa.formuliredit')); ?>" method="POST"
                                             enctype="multipart/form-data">
                                             <?php echo csrf_field(); ?>
                                             <span class="font-weight-bold mt-3 text-danger">Formulir Wajib Di Isi

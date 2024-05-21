@@ -79,7 +79,9 @@
                                                         $skor_akhir += 1;
                                                     }
                                                 }
-                                                $skor_akhir = ($skor_akhir * 100) / $pendaf->hasil_kuis->count();
+                                                if ($skor_akhir != 0) {
+                                                    $skor_akhir = ($skor_akhir * 100) / $pendaf->hasil_kuis->count();
+                                                }
                                             @endphp
                                             <td>{{ $skor_akhir }}</td>
                                             @if ($pendaf->status == 4)
@@ -88,6 +90,8 @@
                                                 <td class="bg-success">Lulus</td>
                                             @elseif($pendaf->status == 6)
                                                 <td class="bg-danger">Tidak Lulus</td>
+                                            @else
+                                                <td class="bg-dark">Belum Test</td>
                                             @endif
                                             <td>
                                                 <a href="{{ route('hasil.detail', $pendaf->id) }}"

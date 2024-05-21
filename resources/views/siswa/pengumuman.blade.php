@@ -46,6 +46,10 @@
                                     Menunggu Konfirmasi Admin
                                 @endif
                             </div>
+                            <div class="card-footer">
+                                <a href="{{ route('sdashboard') }}" class="btn btn-secondary"><i
+                                        class="fas fa-arrow-alt-circle-left"></i> Ke Dashboard</a>
+                            </div>
 
                         </div>
                         <!-- /.col-md-6 -->

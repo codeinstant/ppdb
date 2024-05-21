@@ -73,6 +73,15 @@
                                 name="alamat_sekolah" placeholder="Alamat Sekolah"
                                 value="{{ old('alamat_sekolah', $profil->alamat_sekolah) }}">
 
+                            <label for="akreditasi">Akreditasi</label>
+                            <input type="text" class="form-control col-lg-6 @error('akreditasi') is-invalid @enderror"
+                                name="akreditasi" placeholder="Alamat Sekolah"
+                                value="{{ old('akreditasi', $profil->akreditasi) }}">
+
+                            <label for="sejarah">Sejarah Sekolah</label>
+                            <textarea type="text" class="form-control col-lg-6 @error('sejarah') is-invalid @enderror" name="sejarah"
+                                placeholder="Alamat Sekolah" rows="8">{{ old('sejarah', $profil->sejarah) }}</textarea>
+
                             <label for="tel_sekolah">Telepon Sekolah</label>
                             <input type="text" class="form-control col-lg-6 @error('tel_sekolah') is-invalid @enderror"
                                 name="tel_sekolah" placeholder="Telepon Sekolah"
@@ -84,14 +93,10 @@
                                 value="{{ old('web_sekolah', $profil->web_sekolah) }}">
 
                             <label for="email_sekolah">Email Sekolah</label>
-                            <input type="text" class="form-control col-lg-6 @error('email_sekolah') is-invalid @enderror"
+                            <input type="text"
+                                class="form-control col-lg-6 @error('email_sekolah') is-invalid @enderror"
                                 name="email_sekolah" placeholder="Email Sekolah"
                                 value="{{ old('email_sekolah', $profil->email_sekolah) }}">
-
-                            <label for="logo_sekolah">Logo Sekolah</label>
-                            <input type="text" class="form-control col-lg-6 @error('logo_sekolah') is-invalid @enderror"
-                                name="logo_sekolah" placeholder="Logo Sekolah"
-                                value="{{ old('logo_sekolah', $profil->logo_sekolah) }}">
 
                             <span class="invalid-feedback">
                                 @error('nama_sekolah')

@@ -90,10 +90,10 @@
                                     </tr>
                                     <tr>
                                         <td>Pas Foto 3 x 4</td>
-                                        <td><img src="{{ asset('storage/' . $detail->foto) }}" alt=""
+                                        <td><img src="{{ asset('uploads/' . $detail->foto) }}" alt=""
                                                 style="height: 150px;"></td>
                                         <td>Ijasah</td>
-                                        <td><img src="{{ asset('storage/' . $detail->ijasah) }}" alt=""
+                                        <td><img src="{{ asset('uploads/' . $detail->ijasah) }}" alt=""
                                                 style="height: 150px"></td>
                                     </tr>
                                     <tr>

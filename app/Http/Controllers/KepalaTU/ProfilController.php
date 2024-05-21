@@ -45,6 +45,8 @@ class ProfilController extends Controller
               'nama_ketua_ppdb' => 'required',
               'nip_ppdb' => 'required',
               'alamat_sekolah' => 'required',
+              'akreditasi' => 'required',
+              'sejarah' => 'required',
               'tel_sekolah' => 'required',
               'web_sekolah' => 'required',
               'email_sekolah' => 'required',
@@ -87,6 +89,21 @@ class ProfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function updatelogo(Request $request, $id)
+    {
+        // echo dd($request);
+        $validated = $request->validate([
+            'logo_sekolah' => 'required|mimes:jpg,png|max:2048'
+        ]);
+        
+        $logo_sekolah = $request->file('logo_sekolah')->store('logo_sekolah', ['disk' => 'public_uploads']);
+        Profil::where('id', $id)
+            ->update([
+                'logo_sekolah' => $logo_sekolah
+            ]);
+
+        return redirect(route('kepala.profil.index'))->with('suksesEdit', 'Logo Sekolah Berhasil Di Edit');
+    }
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -97,6 +114,8 @@ class ProfilController extends Controller
               'nama_ketua_ppdb' => 'required',
               'nip_ppdb' => 'required',
               'alamat_sekolah' => 'required',
+              'akreditasi' => 'required',
+              'sejarah' => 'required',
               'tel_sekolah' => 'required',
               'web_sekolah' => 'required',
               'email_sekolah' => 'required',

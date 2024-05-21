@@ -45,6 +45,10 @@
                                     Menunggu Konfirmasi Admin
                                 <?php endif; ?>
                             </div>
+                            <div class="card-footer">
+                                <a href="<?php echo e(route('sdashboard')); ?>" class="btn btn-secondary"><i
+                                        class="fas fa-arrow-alt-circle-left"></i> Ke Dashboard</a>
+                            </div>
 
                         </div>
                         <!-- /.col-md-6 -->

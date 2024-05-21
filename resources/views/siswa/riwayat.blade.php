@@ -66,7 +66,58 @@
                                             <td>{{ $pendaf->jurusan->nama }}</td>
                                             @if ($pendaf->status == 1)
                                                 <td class="bg-warning">Proses Administrasi...</td>
-                                                <td class="bg-light">No Action</td>
+                                                <td class="bg-dark"><a href="/formedit/{{ $pendaf->id }}"
+                                                        class="btn btn-sm btn-warning">Edit</a>&nbsp;
+                                                    <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                                        data-target="#modal{{ $pendaf->id }}">
+                                                        Ijasah
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="modal{{ $pendaf->id }}" tabindex="-1"
+                                                        role="dialog" aria-labelledby="modalTitle{{ $pendaf->id }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"
+                                                                        id="modalTitle{{ $pendaf->id }}">Foto Izasah</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <img src="{{ asset('uploads/' . $pendaf->ijasah) }}"
+                                                                        width="100%">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form action="{{ route('siswa.formulireditijasah') }}"
+                                                                        method="POST" class="d-inline"
+                                                                        enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <div class="form-group col-md-6">
+                                                                            <input type="hidden" name="id"
+                                                                                value="{{ $pendaf->id }}">
+                                                                            <input type="file" name="ijasah"
+                                                                                class="form-control-file @error('ijasah') is-invalid @enderror"
+                                                                                id="exampleFormControlFile1" required>
+                                                                            @error('ijasah')
+                                                                                <div class="invalid-feedback">
+                                                                                    {{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                        </div>
+                                                                        <button class="btn btn-primary"
+                                                                            onclick="return confirm('Apakah anda ingin mengganti ijasah?')">Ubah
+                                                                            Ijasah
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             @elseif ($pendaf->status == 2)
                                                 <td class="bg-success">Lolos Administrasi</td>
                                                 <td class="bg-dark"><a href="/test/{{ $pendaf->penerimaan->id }}"

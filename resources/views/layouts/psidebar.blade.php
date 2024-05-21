@@ -28,6 +28,33 @@
                         </p>
                     </a>
                 </li>
+                <li
+                    class="nav-item has-treeview {{ request()->is('diterima') || request()->is('ditolak') ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ request()->is('diterima') || request()->is('ditolak') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-address-card"></i>
+                        <p>
+                            Pendaftar
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('terima') }}"
+                                class="nav-link {{ request()->is('diterima*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Diterima</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('tolak') }}"
+                                class="nav-link {{ request()->is('ditolak*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ditolak</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('hasil') }}" class="nav-link {{ request()->is('hasil') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-book"></i>

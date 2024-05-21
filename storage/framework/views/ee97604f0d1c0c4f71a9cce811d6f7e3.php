@@ -43,7 +43,7 @@
                                         $no = 0;
                                     ?>
                                     <?php $__currentLoopData = $pendaftar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pendaf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if($pendaf->status == 2): ?>
+                                        <?php if($pendaf->status == 2 || $pendaf->status == 4 || $pendaf->status == 5): ?>
                                             <tr>
                                                 <td><?php echo e($no += 1); ?></td>
                                                 <td><?php echo e($pendaf->user->name); ?></td>

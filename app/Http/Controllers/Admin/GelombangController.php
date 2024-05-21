@@ -56,7 +56,7 @@ class GelombangController extends Controller
 
         // Jika ada tumpang tindih, kembalikan dengan notifikasi
         if ($overlap) {
-            return redirect(route('gelombang.create'))->with('error', 'Periode yang sama sudah ada');
+            return redirect(route('gelombang.index'))->with('delete', 'Periode yang sama sudah ada');
         }
 
         // Simpan data penerimaan jika tidak ada tumpang tindih
@@ -116,7 +116,7 @@ class GelombangController extends Controller
 
         // Jika ada tumpang tindih, kembalikan dengan notifikasi
         if ($overlap) {
-            return redirect(route('gelombang.edit', $id))->with('error', 'Periode yang sama sudah ada');
+            return redirect(route('gelombang.index', $id))->with('delete', 'Periode yang sama sudah ada');
         }
 
         // Update data penerimaan jika tidak ada tumpang tindih

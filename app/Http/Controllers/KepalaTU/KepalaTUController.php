@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Pendaftar;
 use App\Penerimaan;
 use App\User;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DiterimaExport;
+use App\Exports\DitolakExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,5 +27,25 @@ class KepalaTUController extends Controller
     {
         $pendaftar = Pendaftar::all();
         return view('kepalatu.hasil', compact('pendaftar'));
+    }
+    public function terima()
+    {
+        $pendaftar = Pendaftar::all();
+        return view('kepalatu.pendaftar.terima', compact('pendaftar'));
+    }
+
+    public function tolak()
+    {
+        $pendaftar = Pendaftar::all();
+        return view('kepalatu.pendaftar.tolak', compact('pendaftar'));
+    }
+    
+    public function rekapterima()
+    {
+        return Excel::download(new DiterimaExport, 'PPDB-Diterima.xlsx');
+    }
+    public function rekaptolak()
+    {
+        return Excel::download(new DitolakExport, 'PPDB-Ditolak.xlsx');
     }
 }

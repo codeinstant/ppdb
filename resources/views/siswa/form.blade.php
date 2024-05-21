@@ -38,8 +38,8 @@
                                     </div>
                                 @endif
                                 <div class="ml-3 mr-3">
-                                    @if ($pendaftar->count() == 0)
-                                        <form action="{{ route('siswa.formulir') }}" method="POST"
+                                    @if ($pendaftar == null)
+                                        <form action="{{ route('siswa.formuliredit') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <span class="font-weight-bold mt-3 text-danger">Formulir Wajib Di Isi

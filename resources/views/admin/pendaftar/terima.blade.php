@@ -44,7 +44,7 @@
                                         $no = 0;
                                     @endphp
                                     @foreach ($pendaftar as $pendaf)
-                                        @if ($pendaf->status == 2)
+                                        @if ($pendaf->status == 2 || $pendaf->status == 4 || $pendaf->status == 5)
                                             <tr>
                                                 <td>{{ $no += 1 }}</td>
                                                 <td>{{ $pendaf->user->name }}</td>
